@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LiveCharts" Version="0.9.7" />
+      <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+      <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0" />
+      <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
+      <PackageReference Include="SQLitePCLRaw.core" Version="2.1.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Icons\MainIcon.png" />
+      <Resource Include="Icons\MainIcon.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Icons\Trashcan.png" />
+      <Resource Include="Icons\Trashcan.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="FinanseDataBase.db" />
+      <Content Include="FinanseDataBase.db">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>

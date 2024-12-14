@@ -1,0 +1,108 @@
+﻿<Window x:Class="ZarzadzanieFinansami.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Icon="/Icons/MainIcon.png"
+        mc:Ignorable="d"
+        Title="TZF Lite" Height="450" Width="800"
+        Closing="Window_Closing"
+        WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Lewy gorny -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Plik">
+                    <MenuItem Header="_Otwórz" 
+                              Click="MenuItem_Otworz_OnClick"/>
+                    <MenuItem Header="_Zapisz" 
+                              Click="MenuItem_Zapisz_OnClick"/>
+                    <MenuItem Header="_Zapisz jako" 
+                              Click="MenuItem_Zapisz_jako_OnClick" />
+                    <Separator />
+                    <MenuItem Header="_Ustawienia"/>
+                    <Separator />
+                    <MenuItem Header="_Zapisz i wyjdź" 
+                              Click="MenuItem_Wyjdz_OnClick"/>
+                    <MenuItem Header="_Wyjdź" 
+                              Click="MenuItem_Wyjdz_OnClick"/>
+                </MenuItem>
+                <MenuItem Header="_Narzędzia">
+                    <MenuItem Header="Dodaj Rekord" />
+                    <MenuItem Header="Znajdz" />
+                    <Separator />
+                    <MenuItem Header="Usuń wszystkie rekordy" />
+                </MenuItem>
+                <MenuItem Header="_Widok">
+                    <MenuItem Header="Wybór liczby wierszy" Click="MenuItem_View_OnClick"/>
+                </MenuItem>
+
+            </Menu>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <Button Width="20" Content="&lt;" Click="ButtonRight_OnClick" />
+                <TextBlock x:Name="PageTextBlock" Width="40" TextAlignment="Center" TextWrapping="NoWrap" />
+                <Button Width="20" Content="&gt;" Click="ButtonLeft_OnClick" />
+                <Button x:Name="ButtonNumberControll" Background="White" BorderBrush="White"
+                        Click="ButtonNumberControll_OnClick" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Prawy gorny -->
+        <TextBlock Grid.Column="1" Grid.Row="0" x:Name="SystemClock" />
+
+        <!-- Lewy dolny -->
+        <DataGrid ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" x:Name="MyDataGridView"
+                  HorizontalAlignment="Stretch"
+                  SizeChanged="MyDataGridView_SizeChanged"
+                  Loaded="MyDataGridView_Loaded"
+                  AutoGenerateColumns="False"
+                  MouseDoubleClick="MyDataGridView_MouseDoubleClick"
+                  PreviewMouseRightButtonDown="MyDataGridView_PreviewMouseRightButtonDown"
+                  BeginningEdit="MyDataGridView_OnBeginningEdit"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" x:Name="ID" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Nazwa" Binding="{Binding Nazwa}" Width="Auto" />
+                <DataGridTextColumn Header="Kwota" Binding="{Binding Kwota}" Width="Auto" />
+                <DataGridTextColumn Header="Data" Binding="{Binding Data}" Width="Auto" />
+                <DataGridTextColumn Header="Uwagi" Binding="{Binding Uwagi}" Width="Auto" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu Visibility="Collapsed">
+                    <MenuItem Header="Usuń" Click="DataGrid_MenuItem_OnClick">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/Trashcan.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
+        <!-- Prawa dolna  -->
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="Saldo" FontSize="30" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="Wydatki" FontSize="30" />
+            </StackPanel>
+            <lvc:PieChart Series="{Binding PieSeries}" StartingRotationAngle="0" LegendLocation="Right" Height="300" x:Name="Pie"/>
+            <lvc:PieChart Series="{Binding TransactionPieSeries}"  StartingRotationAngle="0" LegendLocation="Bottom" Height="500" x:Name="TransationPieChart" />
+            <Button Click="AddButton_OnClick" Height="20" Content="Dodaj Rekord" Margin="10" />
+        </StackPanel>
+    </Grid>
+</Window>
